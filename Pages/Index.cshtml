@@ -1,0 +1,60 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Калькулятор";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Калькулятор</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" class="mt-4">
+                <div class="form-group mb-3">
+                    <label asp-for="Calculator.FirstNumber" class="control-label"></label>
+                    <input asp-for="Calculator.FirstNumber" class="form-control" />
+                    <span asp-validation-for="Calculator.FirstNumber" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="Calculator.Operation" class="control-label"></label>
+                    <select asp-for="Calculator.Operation" class="form-control">
+                        <option value="add">Сложение (+)</option>
+                        <option value="subtract">Вычитание (-)</option>
+                        <option value="multiply">Умножение (*)</option>
+                        <option value="divide">Деление (/)</option>
+                    </select>
+                    <span asp-validation-for="Calculator.Operation" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="Calculator.SecondNumber" class="control-label"></label>
+                    <input asp-for="Calculator.SecondNumber" class="form-control" />
+                    <span asp-validation-for="Calculator.SecondNumber" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary">Вычислить</button>
+                </div>
+            </form>
+            
+            @if (Model.Calculator.Result.HasValue)
+            {
+                <div class="alert alert-success mt-4">
+                    <h4>Результат: @Model.Calculator.Result</h4>
+                </div>
+            }
+            
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger mt-4">
+                    <h4>Ошибка: @Model.ErrorMessage</h4>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
